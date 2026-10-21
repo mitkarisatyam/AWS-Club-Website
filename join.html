@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Us | AWS SBG × VIT Pune</title>
+  <meta name="description" content="Apply to join AWS Student Building Group at VIT Pune. Select your domain of interest and build real-world cloud solutions.">
+  <link rel="stylesheet" href="/aws/hoisted.d75b784e.css" />
+  <link rel="stylesheet" href="/aws/index.ba2dd3e4.css" />
+  <link rel="stylesheet" href="/shared.css" />
+</head>
+<body style="background-color: #000000">
+  <canvas id="subpage-canvas"></canvas>
+
+  <!-- Main Navigation Header -->
+  <header id="main-header" class="text-white py-3 bg-black fixed left-0 right-0 top-0 z-40">
+    <nav class="container flex justify-between items-center">
+      <a href="/" data-cursor="400" class="flex items-center">
+        <img src="/aws-sbg-logo.png" alt="AWS SBG × VIT" class="h-8 md:h-9 w-auto object-contain" />
+      </a>
+      <ul class="flex gap-8 items-center text-lg">
+        <li class="group has-dropdown relative">
+          <span data-cursor="100">
+            <ul style="opacity: 0; visibility: hidden" class="fixed pr-4 lg:pr-0 lg:absolute lg:w-max top-full left-0 lg:left-auto right-0 text-white opacity-0 text-right h-screen lg:h-auto bg-black/90 lg:bg-transparent group-hover:opacity-100 flex flex-col pt-6">
+              <li title="Go to Home" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/">Home</a></li>
+              <li title="Go to About Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/about.html">About Us</a></li>
+              <li title="Go to Domains" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/domains.html">Domains</a></li>
+              <li title="Go to Team" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/team.html">Team</a></li>
+              <li title="Go to Events" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/events.html">Events</a></li>
+              <li title="Go to Projects" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/projects.html">Projects</a></li>
+              <li title="Go to Join Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4 text-white font-semibold" href="/join.html">Join Us</a></li>
+              <li title="Go to Feedback" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/feedback.html">Feedback</a></li>
+              <li class="lg:hidden mt-10 transition-[margin-right] lg:hover:mr-4 close-menu-btn"><span class="block py-4 underline cursor-pointer">close</span></li>
+            </ul>
+            <button data-collapse-toggle="navbar-hamburger" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700" aria-label="Toggle Navigation">
+              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+              </svg>
+            </button>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <main class="content-container">
+    <section class="page-hero">
+      <p class="text-sm font-semibold tracking-widest uppercase text-gray-400 mb-3">MEMBERSHIP REGISTRATION</p>
+      <h1 class="page-title">JOIN <span class="text-outline">AWS SBG</span></h1>
+      <p class="page-subtitle">
+        Become a member of the AWS Student Building Group community at VIT Pune. Submit your details below to register your interest for recruitment cycles, workshops, and project teams.
+      </p>
+    </section>
+
+    <!-- Registration Form Card -->
+    <div class="max-w-3xl mx-auto my-12">
+      <div class="subpage-card">
+        <div class="mb-8 pb-4 border-b border-white/10">
+          <h2 class="font-oswald text-2xl md:text-3xl font-semibold uppercase">STUDENT APPLICATION FORM</h2>
+          <p class="text-xs text-gray-400 mt-1">Fill out the details below to submit your application.</p>
+        </div>
+
+        <!-- Success Alert -->
+        <div id="join-alert-success" class="alert-box alert-success mb-6">
+          <div class="flex items-start gap-3">
+            <span class="text-xl">✓</span>
+            <div>
+              <h4 class="font-semibold text-base mb-1">Registration Successfully Stored!</h4>
+              <p id="join-success-details" class="text-sm text-emerald-300/90"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Alert -->
+        <div id="join-alert-error" class="alert-box alert-error mb-6">
+          <div class="flex items-start gap-3">
+            <span class="text-xl">✕</span>
+            <div>
+              <h4 class="font-semibold text-base mb-1">Registration Could Not Be Saved</h4>
+              <p id="join-error-details" class="text-sm text-red-300/90"></p>
+              <ul id="join-error-list" class="mt-2 list-disc list-inside text-xs text-red-300"></ul>
+            </div>
+          </div>
+        </div>
+
+        <form id="join-form" novalidate>
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Full Name -->
+            <div class="form-group">
+              <label for="fullName" class="form-label">Full Name <span class="text-red-400">*</span></label>
+              <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" class="form-input" autocomplete="name" />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address <span class="text-red-400">*</span></label>
+              <input type="email" id="email" name="email" required placeholder="Enter your college email" class="form-input" autocomplete="email" />
+            </div>
+
+            <!-- PRN -->
+            <div class="form-group">
+              <label for="prn" class="form-label">Student PRN / Roll No. <span class="text-red-400">*</span></label>
+              <input type="text" id="prn" name="prn" required placeholder="Enter your PRN / Roll No." class="form-input" />
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label for="phone" class="form-label">Contact Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit contact number" class="form-input" autocomplete="tel" />
+            </div>
+
+            <!-- Department / Branch -->
+            <div class="form-group">
+              <label for="department" class="form-label">Department / Branch <span class="text-red-400">*</span></label>
+              <select id="department" name="department" required class="form-select">
+                <option value="">-- Select Your Branch --</option>
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+                <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Chemical Engineering">Chemical Engineering</option>
+                <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+                <option value="Other">Other Branch</option>
+              </select>
+            </div>
+
+            <!-- Year of Study -->
+            <div class="form-group">
+              <label for="year" class="form-label">Year of Study <span class="text-red-400">*</span></label>
+              <select id="year" name="year" required class="form-select">
+                <option value="">-- Select Year --</option>
+                <option value="First Year (FE)">First Year (FE)</option>
+                <option value="Second Year (SE)">Second Year (SE)</option>
+                <option value="Third Year (TE)">Third Year (TE)</option>
+                <option value="Final Year (BE)">Final Year (BE)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Domain of Interest -->
+          <div class="form-group">
+            <label for="domain" class="form-label">Domain of Interest <span class="text-red-400">*</span></label>
+            <select id="domain" name="domain" required class="form-select">
+              <option value="">-- Select Primary Club Domain --</option>
+              <option value="Technical - Software Development">Technical - Software Development</option>
+              <option value="Technical - Cloud Computing">Technical - Cloud Computing</option>
+              <option value="Technical - AI / Machine Learning">Technical - AI / Machine Learning</option>
+              <option value="Technical - Cybersecurity">Technical - Cybersecurity</option>
+              <option value="Technical - Competitive Programming">Technical - Competitive Programming</option>
+              <option value="Creative - Graphic & UI/UX Design">Creative - Graphic & UI/UX Design</option>
+              <option value="Operations - Events & Community Management">Operations - Events & Community Management</option>
+              <option value="Media & Corporate Partnerships">Media & Corporate Partnerships</option>
+            </select>
+          </div>
+
+          <!-- Links -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="form-group">
+              <label for="linkedin" class="form-label">LinkedIn Profile URL</label>
+              <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label for="github" class="form-label">GitHub / Portfolio URL</label>
+              <input type="url" id="github" name="github" placeholder="https://github.com/username" class="form-input" />
+            </div>
+          </div>
+
+          <!-- Motivation -->
+          <div class="form-group">
+            <label for="motivation" class="form-label">Why do you want to join AWS SBG VIT Pune? <span class="text-red-400">*</span></label>
+            <textarea id="motivation" name="motivation" required rows="4" placeholder="Tell us what excites you about cloud computing, what skills you hope to learn, or what projects you want to build..." class="form-textarea"></textarea>
+          </div>
+
+          <!-- Skills / Experience -->
+          <div class="form-group">
+            <label for="skills" class="form-label">Prior Skills or Technologies (Optional)</label>
+            <textarea id="skills" name="skills" rows="3" placeholder="e.g. Python, JavaScript, Docker, AWS fundamentals, Figma, video editing, event organizing..." class="form-textarea"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-8 flex items-center justify-between flex-wrap gap-4">
+            <span class="text-xs text-gray-400">* Required fields</span>
+            <button type="submit" id="submit-btn" class="btn-primary" data-cursor="200">
+              <span id="btn-text">SUBMIT APPLICATION</span>
+              <span id="btn-spinner" class="hidden inline-block animate-spin rounded-full h-4 w-4 border-2 border-black border-t-transparent"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-white pb-16 pt-8 border-t border-white/10 mt-20">
+    <div class="content-container flex flex-col md:flex-row justify-between items-center text-sm text-white/60">
+      <div>&copy; 2026 AWS SBG VIT Pune. All rights reserved.</div>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="https://www.linkedin.com/company/awssbgvit/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">LinkedIn ↗</a>
+        <a href="https://www.awssbgvitp.in/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">Official Portal ↗</a>
+        <a href="/feedback.html" class="hover:text-white transition-colors" data-cursor="100">Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cursor"></div>
+  <script src="/nav.js"></script>
+
+  <!-- Registration Form Submission Handler -->
+  <script>
+    const form = document.getElementById('join-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const alertSuccess = document.getElementById('join-alert-success');
+    const alertError = document.getElementById('join-alert-error');
+    const successDetails = document.getElementById('join-success-details');
+    const errorDetails = document.getElementById('join-error-details');
+    const errorList = document.getElementById('join-error-list');
+
+    // Auto-select domain from URL query parameter (e.g., ?domain=Technical)
+    const urlParams = new URLSearchParams(window.location.search);
+    const domainParam = urlParams.get('domain');
+    if (domainParam) {
+      const domainSelect = document.getElementById('domain');
+      if (domainSelect) {
+        for (let i = 0; i < domainSelect.options.length; i++) {
+          if (domainSelect.options[i].value.toLowerCase().includes(domainParam.toLowerCase()) || 
+              domainSelect.options[i].text.toLowerCase().includes(domainParam.toLowerCase())) {
+            domainSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Clear alerts
+      alertSuccess.style.display = 'none';
+      alertError.style.display = 'none';
+      errorList.innerHTML = '';
+
+      const formData = {
+        fullName: document.getElementById('fullName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        prn: document.getElementById('prn').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        department: document.getElementById('department').value,
+        year: document.getElementById('year').value,
+        domain: document.getElementById('domain').value,
+        linkedin: document.getElementById('linkedin').value.trim(),
+        github: document.getElementById('github').value.trim(),
+        motivation: document.getElementById('motivation').value.trim(),
+        skills: document.getElementById('skills').value.trim()
+      };
+
+      // Client-side quick check
+      if (!formData.fullName || !formData.email || !formData.prn || !formData.department || !formData.year || !formData.domain || !formData.motivation) {
+        alertError.style.display = 'block';
+        errorDetails.textContent = 'Please fill out all required fields before submitting.';
+        return;
+      }
+
+      // Indicate loading
+      submitBtn.disabled = true;
+      btnText.textContent = 'SAVING TO DATABASE...';
+      btnSpinner.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/join', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          alertSuccess.style.display = 'block';
+          successDetails.innerHTML = `Welcome aboard, <strong>${result.data.fullName}</strong>! Your application has been successfully submitted (Application ID: <code>${result.data.id}</code>). We have logged your interest for <strong>${result.data.domain}</strong> and will reach out at <strong>${result.data.email}</strong>.`;
+          form.reset();
+          alertSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          alertError.style.display = 'block';
+          errorDetails.textContent = result.error || 'An error occurred while submitting your application. Please try again.';
+          if (Array.isArray(result.details)) {
+            result.details.forEach(msg => {
+              const li = document.createElement('li');
+              li.textContent = msg;
+              errorList.appendChild(li);
+            });
+          }
+          alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (err) {
+        alertError.style.display = 'block';
+        errorDetails.textContent = 'Could not reach backend server: ' + err.message;
+        alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = 'SUBMIT APPLICATION';
+        btnSpinner.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

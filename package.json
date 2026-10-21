@@ -1,0 +1,31 @@
+{
+  "name": "aws-sbg-vit-pune",
+  "version": "1.0.0",
+  "description": "Official Web Platform & Backend for AWS Student Building Group (AWS SBG) at VIT Pune",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node server/seed.js",
+    "test": "node tests/test-backend.js"
+  },
+  "keywords": [
+    "aws-sbg",
+    "vit-pune",
+    "aws-cloud",
+    "webgl",
+    "threejs",
+    "express",
+    "mongodb"
+  ],
+  "author": "AWS SBG VIT Pune",
+  "license": "MIT",
+  "dependencies": {
+    "@xmldom/xmldom": "^0.9.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "mongoose": "^9.11.2",
+    "three": "^0.170.0"
+  }
+}

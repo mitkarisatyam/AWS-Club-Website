@@ -1,0 +1,157 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
+const { connectDB, getDBStatus } = require('./server/config/db');
+const Event = require('./server/models/Event');
+const Feedback = require('./server/models/Feedback');
+const { verifiedEvents, verifiedFeedback } = require('./server/seed');
+
+const app = express();
+const INITIAL_PORT = parseInt(process.env.PORT, 10) || 8080;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Request logging in development
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    console.log(`[API ${req.method}] ${req.path}`);
+  }
+  next();
+});
+
+// Backend API Routes
+app.use('/api/join', require('./server/routes/registrationRoutes'));
+app.use('/api/feedback', require('./server/routes/feedbackRoutes'));
+app.use('/api/events', require('./server/routes/eventRoutes'));
+
+// Health & Status Endpoint
+app.get('/api/health', (req, res) => {
+  const dbStatus = getDBStatus();
+  res.json({
+    status: 'online',
+    timestamp: new Date().toISOString(),
+    database: dbStatus,
+    club: 'AWS SBG VIT Pune',
+    nodeVersion: process.version
+  });
+});
+
+// Clean Page Route Mapping
+const pageMap = {
+  '/': 'index.html',
+  '/home': 'index.html',
+  '/about': 'about.html',
+  '/about.html': 'about.html',
+  '/domains': 'domains.html',
+  '/domains.html': 'domains.html',
+  '/team': 'team.html',
+  '/team.html': 'team.html',
+  '/events': 'events.html',
+  '/events.html': 'events.html',
+  '/projects': 'projects.html',
+  '/projects.html': 'projects.html',
+  '/join': 'join.html',
+  '/join.html': 'join.html',
+  '/feedback': 'feedback.html',
+  '/feedback.html': 'feedback.html'
+};
+
+// Handle mapped clean URLs
+Object.entries(pageMap).forEach(([route, file]) => {
+  app.get(route, (req, res) => {
+    const filePath = path.join(__dirname, file);
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+    } else {
+      res.status(404).send(`Page ${file} not found.`);
+    }
+  });
+});
+
+// Serve static assets from project root
+app.use(express.static(__dirname, {
+  extensions: ['html', 'htm'],
+  setHeaders: (res, filePath) => {
+    // Preserve custom MIME headers if needed
+    if (filePath.endsWith('.gltf')) {
+      res.setHeader('Content-Type', 'model/gltf+json');
+    } else if (filePath.endsWith('.glb')) {
+      res.setHeader('Content-Type', 'model/gltf-binary');
+    }
+  }
+}));
+
+// Fallback 404 handler for API and static routes
+app.use((req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ success: false, error: 'API route not found' });
+  }
+  res.status(404).sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error('[Global Server Error]', err);
+  res.status(err.status || 500).json({
+    success: false,
+    error: err.message || 'Internal Server Error'
+  });
+});
+
+// Auto-seed initial events and feedback if MongoDB is connected and collection is empty
+async function ensureInitialEvents() {
+  try {
+    const eventCount = await Event.countDocuments();
+    if (eventCount === 0) {
+      console.log('[Init] No events found in MongoDB. Seeding initial verified events...');
+      await Event.insertMany(verifiedEvents);
+      console.log(`[Init] Seeded ${verifiedEvents.length} verified events successfully!`);
+    }
+
+    const fbCount = await Feedback.countDocuments();
+    if (fbCount === 0 && verifiedFeedback) {
+      console.log('[Init] No feedback found in MongoDB. Seeding initial community feedback...');
+      await Feedback.insertMany(verifiedFeedback);
+      console.log(`[Init] Seeded ${verifiedFeedback.length} community feedback entries successfully!`);
+    }
+  } catch (err) {
+    console.warn('[Init Warning] Could not auto-seed data:', err.message);
+  }
+}
+
+// Start Server with port fallback
+function startServer(port) {
+  const server = app.listen(port, async () => {
+    console.log(`====================================================`);
+    console.log(`🚀 AWS SBG VIT Pune Server is live!`);
+    console.log(`📍 Web URL: http://localhost:${port}/`);
+    console.log(`📡 API Endpoints:`);
+    console.log(`   - POST /api/join        (Join Us / Registration)`);
+    console.log(`   - POST /api/feedback    (Visitor Feedback)`);
+    console.log(`   - GET  /api/events      (MongoDB Events Query)`);
+    console.log(`   - GET  /api/health      (Backend & DB Status)`);
+    console.log(`====================================================`);
+
+    // Connect to MongoDB
+    const connected = await connectDB();
+    if (connected) {
+      await ensureInitialEvents();
+    }
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`Port ${port} in use, trying port ${port + 1}...`);
+      startServer(port + 1);
+    } else {
+      console.error('[Server Error]', err);
+    }
+  });
+}
+
+startServer(INITIAL_PORT);

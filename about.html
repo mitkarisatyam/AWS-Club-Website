@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | AWS SBG × VIT Pune</title>
+  <meta name="description" content="Discover the mission, vision, and technical community behind AWS Student Building Group at VIT Pune.">
+  <link rel="stylesheet" href="/aws/hoisted.d75b784e.css" />
+  <link rel="stylesheet" href="/aws/index.ba2dd3e4.css" />
+  <link rel="stylesheet" href="/shared.css" />
+</head>
+<body style="background-color: #000000">
+  <canvas id="subpage-canvas"></canvas>
+
+  <!-- Main Navigation Header -->
+  <header id="main-header" class="text-white py-3 bg-black fixed left-0 right-0 top-0 z-40">
+    <nav class="container flex justify-between items-center">
+      <a href="/" data-cursor="400" class="flex items-center">
+        <img src="/aws-sbg-logo.png" alt="AWS SBG × VIT" class="h-8 md:h-9 w-auto object-contain" />
+      </a>
+      <ul class="flex gap-8 items-center text-lg">
+        <li class="group has-dropdown relative">
+          <span data-cursor="100">
+            <ul style="opacity: 0; visibility: hidden" class="fixed pr-4 lg:pr-0 lg:absolute lg:w-max top-full left-0 lg:left-auto right-0 text-white opacity-0 text-right h-screen lg:h-auto bg-black/90 lg:bg-transparent group-hover:opacity-100 flex flex-col pt-6">
+              <li title="Go to Home" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/">Home</a></li>
+              <li title="Go to About Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4 text-white font-semibold" href="/about.html">About Us</a></li>
+              <li title="Go to Domains" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/domains.html">Domains</a></li>
+              <li title="Go to Team" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/team.html">Team</a></li>
+              <li title="Go to Events" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/events.html">Events</a></li>
+              <li title="Go to Projects" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/projects.html">Projects</a></li>
+              <li title="Go to Join Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/join.html">Join Us</a></li>
+              <li title="Go to Feedback" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/feedback.html">Feedback</a></li>
+              <li class="lg:hidden mt-10 transition-[margin-right] lg:hover:mr-4 close-menu-btn"><span class="block py-4 underline cursor-pointer">close</span></li>
+            </ul>
+            <button data-collapse-toggle="navbar-hamburger" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700" aria-label="Toggle Navigation">
+              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+              </svg>
+            </button>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <main class="content-container">
+    <section class="page-hero">
+      <p class="text-sm font-semibold tracking-widest uppercase text-gray-400 mb-3">WHO WE ARE</p>
+      <h1 class="page-title">ABOUT <span class="text-outline">AWS SBG</span></h1>
+      <p class="page-subtitle">
+        AWS Student Building Group (AWS SBG) at Vishwakarma Institute of Technology, Pune is an active, student-led technical collective dedicated to cloud computing, artificial intelligence, software engineering, and emerging cloud technologies.
+      </p>
+    </section>
+
+    <!-- Mission & Vision Grid -->
+    <section class="grid md:grid-cols-2 gap-8 my-12">
+      <div class="subpage-card" data-cursor="100">
+        <span class="text-xs font-mono uppercase tracking-wider text-blue-400">Our Purpose</span>
+        <h2 class="font-oswald text-3xl font-semibold mt-2 mb-4">OUR MISSION</h2>
+        <p class="text-gray-300 leading-relaxed font-light">
+          To democratize practical cloud education for students. We bridge the gap between textbook concepts and enterprise engineering through hands-on architecture labs, hackathons, open-source project creation, and peer mentorship.
+        </p>
+      </div>
+
+      <div class="subpage-card" data-cursor="100">
+        <span class="text-xs font-mono uppercase tracking-wider text-yellow-400">Our Vision</span>
+        <h2 class="font-oswald text-3xl font-semibold mt-2 mb-4">BUILD BEYOND THE CLOUD</h2>
+        <p class="text-gray-300 leading-relaxed font-light">
+          To cultivate an engineering hub where students don't just consume technology — they architect it. We strive to empower students to build scalable systems, deploy intelligent models, and lead the future of cloud computing.
+        </p>
+      </div>
+    </section>
+
+    <!-- Core Pillars -->
+    <section class="my-20">
+      <h2 class="font-oswald text-4xl font-semibold uppercase mb-8">COMMUNITY <span class="text-outline">PILLARS</span></h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="subpage-card">
+          <div class="text-4xl mb-4 font-oswald text-white/40">01</div>
+          <h3 class="font-oswald text-2xl font-medium mb-3">Hands-on Engineering</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Direct console practice and code-first sessions covering EC2, S3, Lambda, Containers, and Infrastructure as Code.
+          </p>
+        </div>
+
+        <div class="subpage-card">
+          <div class="text-4xl mb-4 font-oswald text-white/40">02</div>
+          <h3 class="font-oswald text-2xl font-medium mb-3">Collaborative Projects</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Cross-disciplinary student teams building functional web platforms, machine learning pipelines, and cloud microservices.
+          </p>
+        </div>
+
+        <div class="subpage-card">
+          <div class="text-4xl mb-4 font-oswald text-white/40">03</div>
+          <h3 class="font-oswald text-2xl font-medium mb-3">Career Acceleration</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Guidance for AWS certifications (Cloud Practitioner, Solutions Architect), industry talks, and student leadership opportunities.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="subpage-card text-center my-20 py-16">
+      <h2 class="font-oswald text-4xl md:text-5xl font-semibold uppercase mb-4">READY TO BUILD WITH US?</h2>
+      <p class="text-gray-300 max-w-xl mx-auto mb-8 font-light">
+        Whether you are taking your first steps in cloud computing or building advanced AI workloads, AWS SBG VIT Pune welcomes your curiosity and drive.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/join.html" class="btn-primary" data-cursor="200">JOIN THE COMMUNITY</a>
+        <a href="/domains.html" class="btn-secondary" data-cursor="100">EXPLORE DOMAINS</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-white pb-16 pt-8 border-t border-white/10 mt-20">
+    <div class="content-container flex flex-col md:flex-row justify-between items-center text-sm text-white/60">
+      <div>&copy; 2026 AWS SBG VIT Pune. All rights reserved.</div>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="https://www.linkedin.com/company/awssbgvit/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">LinkedIn ↗</a>
+        <a href="https://www.awssbgvitp.in/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">Official Portal ↗</a>
+        <a href="/feedback.html" class="hover:text-white transition-colors" data-cursor="100">Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cursor"></div>
+  <script src="/nav.js"></script>
+</body>
+</html>

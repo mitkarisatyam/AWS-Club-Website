@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback | AWS SBG × VIT Pune</title>
+  <meta name="description" content="Share your suggestions, website feedback, and event reviews with the AWS SBG VIT Pune team.">
+  <link rel="stylesheet" href="/aws/hoisted.d75b784e.css" />
+  <link rel="stylesheet" href="/aws/index.ba2dd3e4.css" />
+  <link rel="stylesheet" href="/shared.css" />
+  <style>
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+    .star-rating input {
+      display: none;
+    }
+    .star-rating label {
+      font-size: 1.75rem;
+      color: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: color 0.15s ease, transform 0.15s ease;
+    }
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: #FF9900;
+    }
+    .star-rating label:active {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body style="background-color: #000000">
+  <canvas id="subpage-canvas"></canvas>
+
+  <!-- Main Navigation Header -->
+  <header id="main-header" class="text-white py-3 bg-black fixed left-0 right-0 top-0 z-40">
+    <nav class="container flex justify-between items-center">
+      <a href="/" data-cursor="400" class="flex items-center">
+        <img src="/aws-sbg-logo.png" alt="AWS SBG × VIT" class="h-8 md:h-9 w-auto object-contain" />
+      </a>
+      <ul class="flex gap-8 items-center text-lg">
+        <li class="group has-dropdown relative">
+          <span data-cursor="100">
+            <ul style="opacity: 0; visibility: hidden" class="fixed pr-4 lg:pr-0 lg:absolute lg:w-max top-full left-0 lg:left-auto right-0 text-white opacity-0 text-right h-screen lg:h-auto bg-black/90 lg:bg-transparent group-hover:opacity-100 flex flex-col pt-6">
+              <li title="Go to Home" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/">Home</a></li>
+              <li title="Go to About Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/about.html">About Us</a></li>
+              <li title="Go to Domains" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/domains.html">Domains</a></li>
+              <li title="Go to Team" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/team.html">Team</a></li>
+              <li title="Go to Events" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/events.html">Events</a></li>
+              <li title="Go to Projects" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/projects.html">Projects</a></li>
+              <li title="Go to Join Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/join.html">Join Us</a></li>
+              <li title="Go to Feedback" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4 text-white font-semibold" href="/feedback.html">Feedback</a></li>
+              <li class="lg:hidden mt-10 transition-[margin-right] lg:hover:mr-4 close-menu-btn"><span class="block py-4 underline cursor-pointer">close</span></li>
+            </ul>
+            <button data-collapse-toggle="navbar-hamburger" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700" aria-label="Toggle Navigation">
+              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+              </svg>
+            </button>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <main class="content-container">
+    <section class="page-hero">
+      <p class="text-sm font-semibold tracking-widest uppercase text-gray-400 mb-3">YOUR THOUGHTS MATTER</p>
+      <h1 class="page-title">COMMUNITY <span class="text-outline">FEEDBACK</span></h1>
+      <p class="page-subtitle">
+        We strive to continually improve our workshops, digital platforms, and community initiatives. Submit your review or suggestion to help us make the community even better.
+      </p>
+    </section>
+
+    <!-- Feedback Form Card -->
+    <div class="max-w-2xl mx-auto my-12">
+      <div class="subpage-card">
+        <div class="mb-8 pb-4 border-b border-white/10">
+          <h2 class="font-oswald text-2xl md:text-3xl font-semibold uppercase">SHARE YOUR FEEDBACK</h2>
+          <p class="text-xs text-gray-400 mt-1">We appreciate your honest feedback and suggestions.</p>
+        </div>
+
+        <!-- Success Alert (Shown strictly after backend confirms storage) -->
+        <div id="fb-alert-success" class="alert-box alert-success mb-6">
+          <div class="flex items-start gap-3">
+            <span class="text-xl">✓</span>
+            <div>
+              <h4 class="font-semibold text-base mb-1">Feedback Verified &amp; Saved!</h4>
+              <p id="fb-success-details" class="text-sm text-emerald-300/90"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Alert -->
+        <div id="fb-alert-error" class="alert-box alert-error mb-6">
+          <div class="flex items-start gap-3">
+            <span class="text-xl">✕</span>
+            <div>
+              <h4 class="font-semibold text-base mb-1">Submission Failed</h4>
+              <p id="fb-error-details" class="text-sm text-red-300/90"></p>
+              <ul id="fb-error-list" class="mt-2 list-disc list-inside text-xs text-red-300"></ul>
+            </div>
+          </div>
+        </div>
+
+        <form id="feedback-form" novalidate>
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Name -->
+            <div class="form-group">
+              <label for="fb-name" class="form-label">Your Name <span class="text-red-400">*</span></label>
+              <input type="text" id="fb-name" name="name" required placeholder="Enter your full name" class="form-input" autocomplete="name" />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="fb-email" class="form-label">Email Address <span class="text-red-400">*</span></label>
+              <input type="email" id="fb-email" name="email" required placeholder="Enter your email address" class="form-input" autocomplete="email" />
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="form-group">
+            <label for="fb-category" class="form-label">Feedback Category <span class="text-red-400">*</span></label>
+            <select id="fb-category" name="category" required class="form-select">
+              <option value="">-- Choose Category --</option>
+              <option value="Website Experience">Website Experience &amp; 3D Graphics</option>
+              <option value="Events & Workshops">Events &amp; Hands-on Workshops</option>
+              <option value="Technical Content & Projects">Technical Content &amp; Projects</option>
+              <option value="Community & Collaboration">Community &amp; Collaboration</option>
+              <option value="General Feedback">General Feedback &amp; Suggestions</option>
+            </select>
+          </div>
+
+          <!-- Rating -->
+          <div class="form-group">
+            <label class="form-label">Overall Rating <span class="text-red-400">*</span></label>
+            <div class="star-rating" data-cursor="80">
+              <input type="radio" id="star5" name="rating" value="5" />
+              <label for="star5" title="5 stars - Outstanding">★</label>
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label for="star4" title="4 stars - Very Good">★</label>
+              <input type="radio" id="star3" name="rating" value="3" checked />
+              <label for="star3" title="3 stars - Good">★</label>
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label for="star2" title="2 stars - Fair">★</label>
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label for="star1" title="1 star - Poor">★</label>
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="form-group">
+            <label for="fb-subject" class="form-label">Subject / Title <span class="text-red-400">*</span></label>
+            <input type="text" id="fb-subject" name="subject" required placeholder="e.g. Great 3D visuals on the homepage!" class="form-input" />
+          </div>
+
+          <!-- Message -->
+          <div class="form-group">
+            <label for="fb-message" class="form-label">Your Feedback / Suggestion <span class="text-red-400">*</span></label>
+            <textarea id="fb-message" name="message" required rows="5" placeholder="Please share what you liked or how we can improve our club offerings..." class="form-textarea"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-8 flex items-center justify-between flex-wrap gap-4">
+            <span class="text-xs text-gray-400">* Required fields</span>
+            <button type="submit" id="fb-submit-btn" class="btn-primary" data-cursor="200">
+              <span id="fb-btn-text">SUBMIT FEEDBACK</span>
+              <span id="fb-btn-spinner" class="hidden inline-block animate-spin rounded-full h-4 w-4 border-2 border-black border-t-transparent"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Community Reviews Section (Saves and Shows Data from Backend) -->
+    <div class="max-w-4xl mx-auto my-16">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-4 border-b border-white/10 gap-4">
+        <div>
+          <h2 class="font-oswald text-2xl md:text-3xl font-semibold uppercase">COMMUNITY REVIEWS</h2>
+          <p class="text-xs text-gray-400 mt-1">Live reviews and suggestions stored in our Node.js &amp; MongoDB backend.</p>
+        </div>
+        <div id="fb-counter" class="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/10 text-white">
+          Fetching reviews...
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="fb-list-loading" class="text-center py-10">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white mb-3"></div>
+        <p class="text-gray-400 text-sm">Loading community reviews...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="fb-list-empty" class="subpage-card text-center py-10" style="display: none;">
+        <p class="text-gray-400 text-sm">No reviews found yet. Be the first to share your thoughts above!</p>
+      </div>
+
+      <!-- Reviews Grid -->
+      <div id="fb-list-grid" class="grid md:grid-cols-2 gap-6" style="display: none;"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-white pb-16 pt-8 border-t border-white/10 mt-20">
+    <div class="content-container flex flex-col md:flex-row justify-between items-center text-sm text-white/60">
+      <div>&copy; 2026 AWS SBG VIT Pune. All rights reserved.</div>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="https://www.linkedin.com/company/awssbgvit/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">LinkedIn ↗</a>
+        <a href="https://www.awssbgvitp.in/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">Official Portal ↗</a>
+        <a href="/feedback.html" class="hover:text-white transition-colors" data-cursor="100">Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cursor"></div>
+  <script src="/nav.js"></script>
+
+  <!-- Feedback Form Handler -->
+  <script>
+    const fbForm = document.getElementById('feedback-form');
+    const fbSubmitBtn = document.getElementById('fb-submit-btn');
+    const fbBtnText = document.getElementById('fb-btn-text');
+    const fbBtnSpinner = document.getElementById('fb-btn-spinner');
+    const fbAlertSuccess = document.getElementById('fb-alert-success');
+    const fbAlertError = document.getElementById('fb-alert-error');
+    const fbSuccessDetails = document.getElementById('fb-success-details');
+    const fbErrorDetails = document.getElementById('fb-error-details');
+    const fbErrorList = document.getElementById('fb-error-list');
+
+    fbForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      fbAlertSuccess.style.display = 'none';
+      fbAlertError.style.display = 'none';
+      fbErrorList.innerHTML = '';
+
+      const selectedRating = document.querySelector('input[name="rating"]:checked');
+      const ratingValue = selectedRating ? parseInt(selectedRating.value, 10) : 5;
+
+      const payload = {
+        name: document.getElementById('fb-name').value.trim(),
+        email: document.getElementById('fb-email').value.trim(),
+        category: document.getElementById('fb-category').value,
+        rating: ratingValue,
+        subject: document.getElementById('fb-subject').value.trim(),
+        message: document.getElementById('fb-message').value.trim()
+      };
+
+      if (!payload.name || !payload.email || !payload.category || !payload.subject || !payload.message) {
+        fbAlertError.style.display = 'block';
+        fbErrorDetails.textContent = 'Please fill out all required fields before submitting.';
+        return;
+      }
+
+      fbSubmitBtn.disabled = true;
+      fbBtnText.textContent = 'SUBMITTING...';
+      fbBtnSpinner.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          fbAlertSuccess.style.display = 'block';
+          fbSuccessDetails.innerHTML = `Thank you, <strong>${result.data.name}</strong>! Your feedback for <em>${result.data.category}</em> (${result.data.rating} ★) has been successfully submitted (Reference ID: <code>${result.data.id}</code>).`;
+          fbForm.reset();
+          fbAlertSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          loadCommunityFeedback();
+        } else {
+          fbAlertError.style.display = 'block';
+          fbErrorDetails.textContent = result.error || 'Server rejected the submission.';
+          if (Array.isArray(result.details)) {
+            result.details.forEach(msg => {
+              const li = document.createElement('li');
+              li.textContent = msg;
+              fbErrorList.appendChild(li);
+            });
+          }
+          fbAlertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (err) {
+        fbAlertError.style.display = 'block';
+        fbErrorDetails.textContent = 'Failed to communicate with backend server: ' + err.message;
+        fbAlertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } finally {
+        fbSubmitBtn.disabled = false;
+        fbBtnText.textContent = 'SUBMIT FEEDBACK';
+        fbBtnSpinner.classList.add('hidden');
+      }
+    });
+
+    // Load and render community feedback from GET /api/feedback
+    async function loadCommunityFeedback() {
+      const loadingEl = document.getElementById('fb-list-loading');
+      const emptyEl = document.getElementById('fb-list-empty');
+      const gridEl = document.getElementById('fb-list-grid');
+      const counterEl = document.getElementById('fb-counter');
+
+      try {
+        const res = await fetch('/api/feedback');
+        if (!res.ok) throw new Error('Status ' + res.status);
+        const json = await res.json();
+        
+        loadingEl.style.display = 'none';
+
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          emptyEl.style.display = 'none';
+          gridEl.style.display = 'grid';
+          gridEl.innerHTML = '';
+          if (counterEl) counterEl.textContent = `${json.data.length} Verified Review${json.data.length > 1 ? 's' : ''}`;
+
+          json.data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'subpage-card flex flex-col justify-between';
+            const stars = '★'.repeat(Math.max(1, Math.min(5, item.rating || 5)));
+            const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recent';
+
+            card.innerHTML = `
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-amber-400 font-bold tracking-wider text-base">${stars}</span>
+                  <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/10 text-white/80 font-medium">${escapeHTML(item.category || 'General')}</span>
+                </div>
+                <h3 class="font-oswald text-lg font-semibold text-white mb-2 leading-snug">${escapeHTML(item.subject || 'Community Review')}</h3>
+                <p class="text-sm text-gray-300 leading-relaxed font-light mb-4">${escapeHTML(item.message || '')}</p>
+              </div>
+              <div class="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400">
+                <span class="font-medium text-white/90">👤 ${escapeHTML(item.name || 'Anonymous Student')}</span>
+                <span>${dateStr}</span>
+              </div>
+            `;
+            gridEl.appendChild(card);
+          });
+        } else {
+          emptyEl.style.display = 'block';
+          gridEl.style.display = 'none';
+          if (counterEl) counterEl.textContent = '0 Reviews';
+        }
+      } catch (err) {
+        loadingEl.style.display = 'none';
+        emptyEl.style.display = 'block';
+        if (counterEl) counterEl.textContent = 'Offline Mode';
+      }
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    loadCommunityFeedback();
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- AWS Orange Chip Favicon -->
+  <rect width="48" height="48" fill="#000000" rx="8" />
+  <!-- Central chip ring with pins -->
+  <path fill="#FF9900" fill-rule="evenodd" clip-rule="evenodd" d="
+    M16 6h4v4h4V6h4v4h4V6h4v6h4v4h6v4h-6v4h6v4h-6v4h6v4h-6v6h-4v-4h-4v4h-4v-4h-4v4h-4v-6h-4v-4H6v-4h6v-4H6v-4h6v-4H6v-4h6V6h4v4z
+    m-2 8v20h20V14H14z
+    m4 4h12v12H18V18z
+  "/>
+</svg>

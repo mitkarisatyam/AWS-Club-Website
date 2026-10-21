@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events | AWS SBG × VIT Pune</title>
+  <meta name="description" content="Discover upcoming technical workshops, bootcamps, and past community sessions organized by AWS SBG VIT Pune.">
+  <link rel="stylesheet" href="/aws/hoisted.d75b784e.css" />
+  <link rel="stylesheet" href="/aws/index.ba2dd3e4.css" />
+  <link rel="stylesheet" href="/shared.css" />
+</head>
+<body style="background-color: #000000">
+  <canvas id="subpage-canvas"></canvas>
+
+  <!-- Main Navigation Header -->
+  <header id="main-header" class="text-white py-3 bg-black fixed left-0 right-0 top-0 z-40">
+    <nav class="container flex justify-between items-center">
+      <a href="/" data-cursor="400" class="flex items-center">
+        <img src="/aws-sbg-logo.png" alt="AWS SBG × VIT" class="h-8 md:h-9 w-auto object-contain" />
+      </a>
+      <ul class="flex gap-8 items-center text-lg">
+        <li class="group has-dropdown relative">
+          <span data-cursor="100">
+            <ul style="opacity: 0; visibility: hidden" class="fixed pr-4 lg:pr-0 lg:absolute lg:w-max top-full left-0 lg:left-auto right-0 text-white opacity-0 text-right h-screen lg:h-auto bg-black/90 lg:bg-transparent group-hover:opacity-100 flex flex-col pt-6">
+              <li title="Go to Home" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/">Home</a></li>
+              <li title="Go to About Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/about.html">About Us</a></li>
+              <li title="Go to Domains" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/domains.html">Domains</a></li>
+              <li title="Go to Team" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/team.html">Team</a></li>
+              <li title="Go to Events" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4 text-white font-semibold" href="/events.html">Events</a></li>
+              <li title="Go to Projects" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/projects.html">Projects</a></li>
+              <li title="Go to Join Us" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/join.html">Join Us</a></li>
+              <li title="Go to Feedback" class="transition-[padding-right] lg:hover:pr-4"><a class="block py-4" href="/feedback.html">Feedback</a></li>
+              <li class="lg:hidden mt-10 transition-[margin-right] lg:hover:mr-4 close-menu-btn"><span class="block py-4 underline cursor-pointer">close</span></li>
+            </ul>
+            <button data-collapse-toggle="navbar-hamburger" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700" aria-label="Toggle Navigation">
+              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+              </svg>
+            </button>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <main class="content-container">
+    <section class="page-hero">
+      <p class="text-sm font-semibold tracking-widest uppercase text-gray-400 mb-3">LEARNING & COMMUNITY SESSIONS</p>
+      <h1 class="page-title">COMMUNITY <span class="text-outline">EVENTS</span></h1>
+      <p class="page-subtitle">
+        Hands-on technical workshops, AWS certification preparation tracks, cloud architecture masterclasses, and student meetups.
+      </p>
+
+      <!-- Event Filter Tabs -->
+      <div class="flex flex-wrap gap-3 mt-8">
+        <button id="filter-all" class="btn-primary text-sm py-2 px-6" onclick="filterEvents('all')">ALL SESSIONS</button>
+        <button id="filter-upcoming" class="btn-secondary text-sm py-2 px-6" onclick="filterEvents('Upcoming')">UPCOMING EVENTS</button>
+        <button id="filter-past" class="btn-secondary text-sm py-2 px-6" onclick="filterEvents('Past')">PAST SESSIONS</button>
+      </div>
+    </section>
+
+    <!-- Events Container -->
+    <div id="events-list" class="space-y-8 my-8">
+      <!-- Event 1: Upcoming -->
+      <article class="subpage-card" data-cursor="60" data-event-type="Upcoming">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-white/10 gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge badge-upcoming">Upcoming</span>
+            <span class="badge border-white/20 text-white/90">Hands-on Workshop</span>
+          </div>
+          <a href="/join.html" class="btn-primary text-xs py-2 px-5 mt-4 sm:mt-0" data-cursor="100">REGISTER NOW</a>
+        </div>
+
+        <div class="my-4">
+          <h3 class="font-oswald text-2xl sm:text-3xl font-semibold text-white tracking-wide mb-2">AWS Cloud Discovery Day: Architecture &amp; Serverless Foundations</h3>
+          <p class="text-sm font-light text-gray-300 leading-relaxed">An interactive session guiding students through core AWS services including EC2, S3, IAM, and Lambda. Learn how to architect scalable, resilient cloud applications from scratch.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 py-3 px-4 rounded-lg bg-white/[0.02] border border-white/5 text-xs text-gray-300">
+          <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Date</span>Upcoming Semester 2026</div>
+          <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Time</span>3:30 PM - 6:00 PM IST</div>
+          <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Venue</span>VIT Pune Campus &amp; Virtual Discord</div>
+        </div>
+
+        <ul class="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>AWS Core Global Infrastructure &amp; Security Models</span></li>
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>Deploying Serverless Functions with AWS Lambda</span></li>
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>Architecting for Scalability, High Availability, and Cost Efficiency</span></li>
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>AWS Student Certifications &amp; Career Trajectory</span></li>
+        </ul>
+
+        <div class="mt-4 pt-4 border-t border-white/5 flex flex-wrap gap-4 text-xs text-gray-400">
+          <span class="text-white/60 font-medium">Mentors:</span>
+          <span><strong class="text-white">Aditya Katare</strong> (President)</span>
+          <span><strong class="text-white">Satyajit Gaikwad</strong> (Head — Web Development)</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="badge text-[10px] py-1 px-3">AWS</span>
+          <span class="badge text-[10px] py-1 px-3">Cloud Computing</span>
+          <span class="badge text-[10px] py-1 px-3">Serverless</span>
+          <span class="badge text-[10px] py-1 px-3">Architecture</span>
+          <span class="badge text-[10px] py-1 px-3">VIT Pune</span>
+        </div>
+      </article>
+
+      <!-- Event 2: Past -->
+      <article class="subpage-card" data-cursor="60" data-event-type="Past">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-white/10 gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge badge-past">Past</span>
+            <span class="badge border-white/20 text-white/90">Community Meetup</span>
+          </div>
+          <span class="badge badge-past text-xs py-2 px-4 mt-4 sm:mt-0">SESSION COMPLETED</span>
+        </div>
+
+        <div class="my-4">
+          <h3 class="font-oswald text-2xl sm:text-3xl font-semibold text-white tracking-wide mb-2">AWS SBG VIT Pune: Community Orientation &amp; Cloud Roadshow</h3>
+          <p class="text-sm font-light text-gray-300 leading-relaxed">Inaugural orientation introducing students to AWS Student Building Group VIT Pune, our technical domains, collaborative project pipelines, and hands-on peer mentorship programs.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 py-3 px-4 rounded-lg bg-white/[0.02] border border-white/5 text-xs text-gray-300">
+          <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Date</span>Past Session</div>
+          <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Time</span>Completed</div>
+          <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Venue</span>VIT Pune Campus</div>
+        </div>
+
+        <ul class="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>Club Vision, Mission &amp; Community Overview</span></li>
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>Introduction of Technical, Creative &amp; Operations Domains</span></li>
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>Student Project Opportunities &amp; Open Source Collaborations</span></li>
+          <li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>Networking with Club Leadership and Senior Mentors</span></li>
+        </ul>
+
+        <div class="mt-4 pt-4 border-t border-white/5 flex flex-wrap gap-4 text-xs text-gray-400">
+          <span class="text-white/60 font-medium">Mentors:</span>
+          <span><strong class="text-white">Aditya Katare</strong> (President)</span>
+          <span><strong class="text-white">Aryan Khade</strong> (Vice President)</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="badge text-[10px] py-1 px-3">Community</span>
+          <span class="badge text-[10px] py-1 px-3">Orientation</span>
+          <span class="badge text-[10px] py-1 px-3">Cloud Careers</span>
+          <span class="badge text-[10px] py-1 px-3">AWS SBG</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Host an Event Banner -->
+    <section class="subpage-card text-center my-16 py-12">
+      <h2 class="font-oswald text-3xl md:text-4xl font-semibold uppercase mb-3">WANT TO PROPOSE A TOPIC?</h2>
+      <p class="text-gray-300 max-w-xl mx-auto mb-6 font-light text-sm">
+        Have an idea for a cloud lab, peer presentation, or open-source workshop? Submit feedback to our team.
+      </p>
+      <a href="/feedback.html" class="btn-primary" data-cursor="200">PROPOSE AN EVENT IDEA</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-white pb-16 pt-8 border-t border-white/10 mt-20">
+    <div class="content-container flex flex-col md:flex-row justify-between items-center text-sm text-white/60">
+      <div>&copy; 2026 AWS SBG VIT Pune. All rights reserved.</div>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="https://www.linkedin.com/company/awssbgvit/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">LinkedIn ↗</a>
+        <a href="https://www.awssbgvitp.in/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="100">Official Portal ↗</a>
+        <a href="/feedback.html" class="hover:text-white transition-colors" data-cursor="100">Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cursor"></div>
+  <script src="/nav.js"></script>
+
+  <!-- Client Script for Event Filtering and Sync -->
+  <script>
+    const staticEvents = [
+      {
+        title: 'AWS Cloud Discovery Day: Architecture & Serverless Foundations',
+        type: 'Upcoming',
+        category: 'Hands-on Workshop',
+        date: 'Upcoming Semester 2026',
+        time: '3:30 PM - 6:00 PM IST',
+        venue: 'VIT Pune Campus & Virtual Discord',
+        description: 'An interactive session guiding students through core AWS services including EC2, S3, IAM, and Lambda. Learn how to architect scalable, resilient cloud applications from scratch.',
+        highlights: [
+          'AWS Core Global Infrastructure & Security Models',
+          'Deploying Serverless Functions with AWS Lambda',
+          'Architecting for Scalability, High Availability, and Cost Efficiency',
+          'AWS Student Certifications & Career Trajectory'
+        ],
+        speakers: [
+          { name: 'Aditya Katare', role: 'President' },
+          { name: 'Satyajit Gaikwad', role: 'Head — Web Development' }
+        ],
+        tags: ['AWS', 'Cloud Computing', 'Serverless', 'Architecture', 'VIT Pune'],
+        registrationUrl: '/join.html'
+      },
+      {
+        title: 'AWS SBG VIT Pune: Community Orientation & Cloud Roadshow',
+        type: 'Past',
+        category: 'Community Meetup',
+        date: 'Past Session',
+        time: 'Completed',
+        venue: 'VIT Pune Campus',
+        description: 'Inaugural orientation introducing students to AWS Student Building Group VIT Pune, our technical domains, collaborative project pipelines, and hands-on peer mentorship programs.',
+        highlights: [
+          'Club Vision, Mission & Community Overview',
+          'Introduction of Technical, Creative & Operations Domains',
+          'Student Project Opportunities & Open Source Collaborations',
+          'Networking with Club Leadership and Senior Mentors'
+        ],
+        speakers: [
+          { name: 'Aditya Katare', role: 'President' },
+          { name: 'Aryan Khade', role: 'Vice President' }
+        ],
+        tags: ['Community', 'Orientation', 'Cloud Careers', 'AWS SBG'],
+        registrationUrl: '/events.html'
+      }
+    ];
+
+    let allEventsData = staticEvents;
+    let currentFilter = 'all';
+
+    async function syncEvents() {
+      try {
+        const res = await fetch('/api/events');
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          allEventsData = json.data;
+          renderEventsList(allEventsData);
+        }
+      } catch (e) {
+        // Silently use static fallback with zero disruption
+      }
+    }
+
+    function renderEventsList(events) {
+      const listEl = document.getElementById('events-list');
+      listEl.innerHTML = '';
+
+      const filtered = currentFilter === 'all' 
+        ? events 
+        : events.filter(e => e.type === currentFilter);
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="subpage-card text-center py-12">
+            <p class="text-gray-400">No events found in this category.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(evt => {
+        const isUpcoming = evt.type === 'Upcoming';
+        const typeBadgeClass = isUpcoming ? 'badge-upcoming' : 'badge-past';
+
+        const highlightsHtml = (evt.highlights && evt.highlights.length > 0)
+          ? `<ul class="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-gray-300">
+              ${evt.highlights.map(h => `<li class="flex items-start gap-2"><span class="text-white/40 font-mono">▸</span><span>${escapeHtml(h)}</span></li>`).join('')}
+             </ul>`
+          : '';
+
+        const speakersHtml = (evt.speakers && evt.speakers.length > 0)
+          ? `<div class="mt-4 pt-4 border-t border-white/5 flex flex-wrap gap-4 text-xs text-gray-400">
+              <span class="text-white/60 font-medium">Mentors:</span>
+              ${evt.speakers.map(s => `<span><strong class="text-white">${escapeHtml(s.name)}</strong> (${escapeHtml(s.role)})</span>`).join('')}
+             </div>`
+          : '';
+
+        const tagsHtml = (evt.tags && evt.tags.length > 0)
+          ? `<div class="flex flex-wrap gap-2 mt-4">
+              ${evt.tags.map(t => `<span class="badge text-[10px] py-1 px-3">${escapeHtml(t)}</span>`).join('')}
+             </div>`
+          : '';
+
+        const actionBtn = isUpcoming
+          ? `<a href="${evt.registrationUrl || '/join.html'}" class="btn-primary text-xs py-2 px-5 mt-4 sm:mt-0" data-cursor="100">REGISTER NOW</a>`
+          : `<span class="badge badge-past text-xs py-2 px-4 mt-4 sm:mt-0">SESSION COMPLETED</span>`;
+
+        const card = document.createElement('article');
+        card.className = 'subpage-card';
+        card.setAttribute('data-cursor', '60');
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-white/10 gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="badge ${typeBadgeClass}">${escapeHtml(evt.type)}</span>
+              <span class="badge border-white/20 text-white/90">${escapeHtml(evt.category)}</span>
+            </div>
+            ${actionBtn}
+          </div>
+
+          <div class="my-4">
+            <h3 class="font-oswald text-2xl sm:text-3xl font-semibold text-white tracking-wide mb-2">${escapeHtml(evt.title)}</h3>
+            <p class="text-sm font-light text-gray-300 leading-relaxed">${escapeHtml(evt.description)}</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 py-3 px-4 rounded-lg bg-white/[0.02] border border-white/5 text-xs text-gray-300">
+            <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Date</span>${escapeHtml(evt.date)}</div>
+            <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Time</span>${escapeHtml(evt.time || 'TBA')}</div>
+            <div><span class="text-gray-400 uppercase font-mono block text-[10px]">Venue</span>${escapeHtml(evt.venue || 'VIT Pune')}</div>
+          </div>
+
+          ${highlightsHtml}
+          ${speakersHtml}
+          ${tagsHtml}
+        `;
+        listEl.appendChild(card);
+      });
+    }
+
+    function filterEvents(type) {
+      currentFilter = type;
+      ['all', 'upcoming', 'past'].forEach(btn => {
+        const el = document.getElementById(`filter-${btn}`);
+        if (!el) return;
+        if (btn === type.toLowerCase() || (type === 'all' && btn === 'all')) {
+          el.className = 'btn-primary text-sm py-2 px-6';
+        } else {
+          el.className = 'btn-secondary text-sm py-2 px-6';
+        }
+      });
+      renderEventsList(allEventsData);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    document.addEventListener('DOMContentLoaded', syncEvents);
+  </script>
+</body>
+</html>
