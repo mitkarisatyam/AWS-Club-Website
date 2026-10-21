@@ -43,6 +43,8 @@ app.get('/api/health', (req, res) => {
 
 // Standalone local static serving & clean page routes (handled by Vercel CDN in production)
 if (!process.env.VERCEL) {
+  const PUBLIC_DIR = path.join(__dirname, 'public');
+
   const pageMap = {
     '/': 'index.html',
     '/home': 'index.html',
@@ -64,7 +66,7 @@ if (!process.env.VERCEL) {
 
   Object.entries(pageMap).forEach(([route, file]) => {
     app.get(route, (req, res) => {
-      const filePath = path.join(__dirname, file);
+      const filePath = path.join(PUBLIC_DIR, file);
       if (fs.existsSync(filePath)) {
         res.sendFile(filePath);
       } else {
@@ -73,7 +75,7 @@ if (!process.env.VERCEL) {
     });
   });
 
-  app.use(express.static(__dirname, {
+  app.use(express.static(PUBLIC_DIR, {
     extensions: ['html', 'htm'],
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('.gltf')) {
@@ -88,7 +90,7 @@ if (!process.env.VERCEL) {
     if (req.path.startsWith('/api')) {
       return res.status(404).json({ success: false, error: 'API route not found' });
     }
-    res.status(404).sendFile(path.join(__dirname, 'index.html'));
+    res.status(404).sendFile(path.join(PUBLIC_DIR, 'index.html'));
   });
 } else {
   // On Vercel, any unmatched /api route returns 404 JSON
