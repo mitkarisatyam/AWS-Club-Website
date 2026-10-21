@@ -41,6 +41,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Root homepage route
+app.get('/', (req, res) => {
+  const publicDir = path.join(process.cwd(), 'public');
+  const indexPath = path.join(publicDir, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Standalone local static serving & clean page routes (handled by Vercel CDN in production)
 if (!process.env.VERCEL) {
   const PUBLIC_DIR = path.join(__dirname, 'public');
