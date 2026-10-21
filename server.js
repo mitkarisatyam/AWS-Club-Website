@@ -154,4 +154,14 @@ function startServer(port) {
   });
 }
 
-startServer(INITIAL_PORT);
+if (!process.env.VERCEL) {
+  startServer(INITIAL_PORT);
+} else {
+  connectDB().then(connected => {
+    if (connected) ensureInitialEvents();
+  }).catch(err => {
+    console.warn('[Vercel DB Init]', err.message);
+  });
+}
+
+module.exports = app;
