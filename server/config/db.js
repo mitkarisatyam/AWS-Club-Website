@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 let isConnected = false;
 
 const connectDB = async () => {
+  if (mongoose.connection.readyState === 1) {
+    return true;
+  }
+
   const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/aws_sbg_vit';
   
   try {
@@ -14,8 +18,8 @@ const connectDB = async () => {
     return true;
   } catch (error) {
     isConnected = false;
-    console.warn(`[MongoDB Warning] Could not connect to MongoDB at ${uri}: ${error.message}`);
-    console.warn(`[MongoDB Tip] Ensure MongoDB is running locally (e.g., 'net start MongoDB' or 'mongod') or set MONGODB_URI in your .env file to a MongoDB Atlas cluster URI.`);
+    console.warn(`[MongoDB Warning] Could not connect to MongoDB: ${error.message}`);
+    console.warn(`[MongoDB Tip] Ensure MONGODB_URI is configured in Vercel environment variables or local .env`);
     return false;
   }
 };

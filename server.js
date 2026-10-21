@@ -24,6 +24,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serverless / Vercel DB auto-connect middleware
+app.use('/api', async (req, res, next) => {
+  try {
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+  } catch (err) {
+    console.warn('[Serverless DB Middleware]', err.message);
+  }
+  next();
+});
+
 // Backend API Routes
 app.use('/api/join', require('./server/routes/registrationRoutes'));
 app.use('/api/feedback', require('./server/routes/feedbackRoutes'));

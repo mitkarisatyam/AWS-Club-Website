@@ -279,7 +279,17 @@
           body: JSON.stringify(formData)
         });
 
-        const result = await response.json();
+        let result;
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          result = await response.json();
+        } else {
+          const rawText = await response.text();
+          throw new Error(response.status === 404
+            ? 'Backend API route (/api/join) not found. Please ensure Vercel functions are deployed.'
+            : `Server returned non-JSON error (${response.status}): ${rawText.slice(0, 120)}`
+          );
+        }
 
         if (response.ok && result.success) {
           alertSuccess.style.display = 'block';
