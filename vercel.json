@@ -5,5 +5,29 @@
       "source": "/api/:match*",
       "destination": "/api/index.js"
     }
+  ],
+  "headers": [
+    {
+      "source": "/aws/(.*).gltf",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "model/gltf+json"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/aws/(.*).woff2",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "font/woff2"
+        }
+      ]
+    }
   ]
 }

@@ -41,58 +41,61 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Clean Page Route Mapping
-const pageMap = {
-  '/': 'index.html',
-  '/home': 'index.html',
-  '/about': 'about.html',
-  '/about.html': 'about.html',
-  '/domains': 'domains.html',
-  '/domains.html': 'domains.html',
-  '/team': 'team.html',
-  '/team.html': 'team.html',
-  '/events': 'events.html',
-  '/events.html': 'events.html',
-  '/projects': 'projects.html',
-  '/projects.html': 'projects.html',
-  '/join': 'join.html',
-  '/join.html': 'join.html',
-  '/feedback': 'feedback.html',
-  '/feedback.html': 'feedback.html'
-};
+// Standalone local static serving & clean page routes (handled by Vercel CDN in production)
+if (!process.env.VERCEL) {
+  const pageMap = {
+    '/': 'index.html',
+    '/home': 'index.html',
+    '/about': 'about.html',
+    '/about.html': 'about.html',
+    '/domains': 'domains.html',
+    '/domains.html': 'domains.html',
+    '/team': 'team.html',
+    '/team.html': 'team.html',
+    '/events': 'events.html',
+    '/events.html': 'events.html',
+    '/projects': 'projects.html',
+    '/projects.html': 'projects.html',
+    '/join': 'join.html',
+    '/join.html': 'join.html',
+    '/feedback': 'feedback.html',
+    '/feedback.html': 'feedback.html'
+  };
 
-// Handle mapped clean URLs
-Object.entries(pageMap).forEach(([route, file]) => {
-  app.get(route, (req, res) => {
-    const filePath = path.join(__dirname, file);
-    if (fs.existsSync(filePath)) {
-      res.sendFile(filePath);
-    } else {
-      res.status(404).send(`Page ${file} not found.`);
-    }
+  Object.entries(pageMap).forEach(([route, file]) => {
+    app.get(route, (req, res) => {
+      const filePath = path.join(__dirname, file);
+      if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+      } else {
+        res.status(404).send(`Page ${file} not found.`);
+      }
+    });
   });
-});
 
-// Serve static assets from project root
-app.use(express.static(__dirname, {
-  extensions: ['html', 'htm'],
-  setHeaders: (res, filePath) => {
-    // Preserve custom MIME headers if needed
-    if (filePath.endsWith('.gltf')) {
-      res.setHeader('Content-Type', 'model/gltf+json');
-    } else if (filePath.endsWith('.glb')) {
-      res.setHeader('Content-Type', 'model/gltf-binary');
+  app.use(express.static(__dirname, {
+    extensions: ['html', 'htm'],
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.gltf')) {
+        res.setHeader('Content-Type', 'model/gltf+json');
+      } else if (filePath.endsWith('.glb')) {
+        res.setHeader('Content-Type', 'model/gltf-binary');
+      }
     }
-  }
-}));
+  }));
 
-// Fallback 404 handler for API and static routes
-app.use((req, res) => {
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({ success: false, error: 'API route not found' });
-  }
-  res.status(404).sendFile(path.join(__dirname, 'index.html'));
-});
+  app.use((req, res) => {
+    if (req.path.startsWith('/api')) {
+      return res.status(404).json({ success: false, error: 'API route not found' });
+    }
+    res.status(404).sendFile(path.join(__dirname, 'index.html'));
+  });
+} else {
+  // On Vercel, any unmatched /api route returns 404 JSON
+  app.use('/api', (req, res) => {
+    res.status(404).json({ success: false, error: 'API route not found' });
+  });
+}
 
 // Global Error Handler
 app.use((err, req, res, next) => {
