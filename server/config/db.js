@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-let isConnected = false;
+let cachedPromise = null;
 
 const connectDB = async () => {
   if (mongoose.connection.readyState === 1) {
@@ -9,19 +9,26 @@ const connectDB = async () => {
 
   const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/aws_sbg_vit';
   
-  try {
-    const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 5000,
+  if (!cachedPromise) {
+    cachedPromise = mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 8000,
+    }).then(conn => {
+      console.log(`[MongoDB] Connected successfully to host: ${conn.connection.host} (DB: ${conn.connection.name})`);
+      return true;
+    }).catch(error => {
+      cachedPromise = null;
+      console.warn(`[MongoDB Warning] Could not connect to MongoDB: ${error.message}`);
+      return false;
     });
-    isConnected = true;
-    console.log(`[MongoDB] Connected successfully to host: ${conn.connection.host} (DB: ${conn.connection.name})`);
-    return true;
-  } catch (error) {
-    isConnected = false;
-    console.warn(`[MongoDB Warning] Could not connect to MongoDB: ${error.message}`);
-    console.warn(`[MongoDB Tip] Ensure MONGODB_URI is configured in Vercel environment variables or local .env`);
-    return false;
   }
+
+  try {
+    await cachedPromise;
+  } catch (err) {
+    cachedPromise = null;
+  }
+
+  return mongoose.connection.readyState === 1;
 };
 
 const getDBStatus = () => {

@@ -9,6 +9,11 @@ const isDbConnected = () => mongoose.connection.readyState === 1;
 // GET /api/events - Retrieve community events
 router.get('/', async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      const { connectDB } = require('../config/db');
+      await connectDB();
+    }
+
     const { type } = req.query;
 
     if (!isDbConnected()) {

@@ -43,7 +43,15 @@ app.use('/api/feedback', require('./server/routes/feedbackRoutes'));
 app.use('/api/events', require('./server/routes/eventRoutes'));
 
 // Health & Status Endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+  } catch (err) {
+    console.warn('[Health DB]', err.message);
+  }
   const dbStatus = getDBStatus();
   res.json({
     status: 'online',

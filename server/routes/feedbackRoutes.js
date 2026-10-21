@@ -8,6 +8,11 @@ const isDbConnected = () => mongoose.connection.readyState === 1;
 // GET /api/feedback - Retrieve approved / recent community feedback
 router.get('/', async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      const { connectDB } = require('../config/db');
+      await connectDB();
+    }
+
     if (!isDbConnected()) {
       return res.status(503).json({
         success: false,
@@ -39,6 +44,11 @@ router.get('/', async (req, res) => {
 // POST /api/feedback - Submit visitor feedback
 router.post('/', async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      const { connectDB } = require('../config/db');
+      await connectDB();
+    }
+
     if (!isDbConnected()) {
       return res.status(503).json({
         success: false,

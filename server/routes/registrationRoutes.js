@@ -9,6 +9,11 @@ const isDbConnected = () => mongoose.connection.readyState === 1;
 // POST /api/join - Register membership interest
 router.post('/', async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      const { connectDB } = require('../config/db');
+      await connectDB();
+    }
+
     if (!isDbConnected()) {
       return res.status(503).json({
         success: false,
