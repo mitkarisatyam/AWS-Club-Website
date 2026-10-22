@@ -108,12 +108,12 @@
     <div id="repos-error" class="subpage-card text-center py-12 my-8" style="display: none;">
       <p class="text-red-400 font-semibold mb-2">Unable to retrieve repositories from GitHub.</p>
       <p id="repos-error-msg" class="text-gray-400 text-sm mb-4"></p>
-      <button onclick="fetchRepositories(true)" class="btn-secondary text-xs py-2 px-6">RETRY</button>
+      <button onclick="fetchRepositories(true, currentUsername)" class="btn-secondary text-xs py-2 px-6">RETRY</button>
     </div>
 
     <!-- Empty State -->
     <div id="repos-empty" class="subpage-card text-center py-12 my-8" style="display: none;">
-      <p class="text-gray-400 text-sm">No repositories found matching your filter.</p>
+      <p id="repos-empty-msg" class="text-gray-400 text-sm">No repositories found matching your filter.</p>
     </div>
 
     <!-- Dynamic Repositories Grid -->
@@ -146,94 +146,22 @@
 
   <!-- GitHub REST API Integration Script -->
   <script>
-    const GITHUB_USERNAME = 'mitkarisatyam';
-
-    // Verified public repositories from https://github.com/mitkarisatyam
-    const initialRepos = [
-      {
-        name: "SignLink",
-        description: "SIGNLINK — Two-way communication platform connecting Deaf and hearing users through ISL sign recognition and a 3D avatar.",
-        html_url: "https://github.com/mitkarisatyam/SignLink",
-        language: "JavaScript",
-        stargazers_count: 0,
-        forks_count: 0,
-        updated_at: "2026-10-11T08:06:26Z",
-        topics: ["isl", "sign-language", "threejs", "accessibility"]
-      },
-      {
-        name: "AWS-Club-Website",
-        description: "Official web platform and backend architecture for AWS Student Building Group at VIT Pune.",
-        html_url: "https://github.com/mitkarisatyam/AWS-Club-Website",
-        language: "HTML",
-        stargazers_count: 0,
-        forks_count: 0,
-        updated_at: "2026-10-20T18:57:27Z",
-        topics: ["aws", "cloud", "threejs", "webgl", "express"]
-      },
-      {
-        name: "ITSA-Club-Website",
-        description: "Official website and student portal for Information Technology Students Association.",
-        html_url: "https://github.com/mitkarisatyam/ITSA-Club-Website",
-        language: "HTML",
-        stargazers_count: 0,
-        forks_count: 0,
-        updated_at: "2026-10-18T10:37:35Z",
-        topics: ["club-portal", "vit-pune", "frontend"]
-      },
-      {
-        name: "McLaren-750s-",
-        description: "Interactive 3D automotive showcase with Three.js graphics and real-time shaders.",
-        html_url: "https://github.com/mitkarisatyam/McLaren-750s-",
-        language: "HTML",
-        stargazers_count: 0,
-        forks_count: 0,
-        updated_at: "2026-08-31T07:20:09Z",
-        topics: ["threejs", "automotive", "webgl"]
-      },
-      {
-        name: "YouCam",
-        description: "Real-time camera filter and computer vision application built with TypeScript.",
-        html_url: "https://github.com/mitkarisatyam/YouCam",
-        language: "TypeScript",
-        stargazers_count: 0,
-        forks_count: 1,
-        updated_at: "2026-08-16T05:57:58Z",
-        topics: ["typescript", "camera", "computer-vision"]
-      },
-      {
-        name: "aditya-L1-solar-explorer",
-        description: "Study solar flares and other phenomena using data from ISRO's Aditya-L1 space observatory.",
-        html_url: "https://github.com/mitkarisatyam/aditya-L1-solar-explorer",
-        language: "Python",
-        stargazers_count: 0,
-        forks_count: 0,
-        updated_at: "2026-08-11T09:58:21Z",
-        topics: ["isro", "aditya-l1", "astronomy", "space"]
-      },
-      {
-        name: "EVAI",
-        description: "Intelligent analytics and prediction models for electric vehicle charging infrastructure.",
-        html_url: "https://github.com/mitkarisatyam/EVAI",
-        language: "Python",
-        stargazers_count: 0,
-        forks_count: 0,
-        updated_at: "2026-08-08T16:28:07Z",
-        topics: ["ev", "machine-learning", "analytics"]
-      },
-      {
-        name: "virasat",
-        description: "Cultural heritage and architectural monument preservation platform.",
-        html_url: "https://github.com/mitkarisatyam/virasat",
-        language: "JavaScript",
-        stargazers_count: 0,
-        forks_count: 0,
-        updated_at: "2026-09-04T11:25:40Z",
-        topics: ["heritage", "culture", "web"]
-      }
-    ];
-
     let currentUsername = 'mitkarisatyam';
-    let allRepos = initialRepos;
+    let allRepos = [];
+
+    function getGitHubApiUrl(target) {
+      const normalized = (target || '').toLowerCase().trim();
+      if (normalized === 'aws') {
+        return 'https://api.github.com/orgs/aws/repos?type=public&sort=updated&per_page=100';
+      }
+      if (normalized === 'awslabs') {
+        return 'https://api.github.com/orgs/awslabs/repos?type=public&sort=updated&per_page=100';
+      }
+      if (normalized === 'mitkarisatyam') {
+        return 'https://api.github.com/users/mitkarisatyam/repos?sort=updated&per_page=100';
+      }
+      return `https://api.github.com/users/${encodeURIComponent(target.trim())}/repos?sort=updated&per_page=100`;
+    }
 
     function switchUser(username, btn) {
       document.querySelectorAll('.source-pill').forEach(p => p.classList.remove('active-pill'));
@@ -241,6 +169,8 @@
       currentUsername = username;
       const searchInput = document.getElementById('repo-search');
       if (searchInput) searchInput.value = '';
+      const langFilter = document.getElementById('repo-language-filter');
+      if (langFilter) langFilter.value = 'all';
       fetchRepositories(false, username);
     }
 
@@ -252,6 +182,8 @@
       currentUsername = user;
       const searchInput = document.getElementById('repo-search');
       if (searchInput) searchInput.value = '';
+      const langFilter = document.getElementById('repo-language-filter');
+      if (langFilter) langFilter.value = 'all';
       fetchRepositories(false, user);
     }
 
@@ -270,14 +202,26 @@
       const errorEl = document.getElementById('repos-error');
       const errorMsg = document.getElementById('repos-error-msg');
       const emptyEl = document.getElementById('repos-empty');
+      const emptyMsg = document.getElementById('repos-empty-msg');
 
-      loadingEl.style.display = 'flex';
-      gridEl.style.display = 'none';
-      errorEl.style.display = 'none';
+      if (loadingEl) loadingEl.style.display = 'block';
+      if (gridEl) gridEl.style.display = 'none';
+      if (errorEl) errorEl.style.display = 'none';
       if (emptyEl) emptyEl.style.display = 'none';
 
       try {
-        const res = await fetch(`https://api.github.com/users/${encodeURIComponent(targetUser)}/repos?sort=updated&per_page=100`);
+        const url = getGitHubApiUrl(targetUser);
+        let res = await fetch(url);
+
+        // Fallback for custom search if /users/ returns 404 (in case it is an organization)
+        if (res.status === 404 && targetUser !== 'mitkarisatyam' && targetUser !== 'aws' && targetUser !== 'awslabs') {
+          const orgUrl = `https://api.github.com/orgs/${encodeURIComponent(targetUser.trim())}/repos?type=public&sort=updated&per_page=100`;
+          const orgRes = await fetch(orgUrl);
+          if (orgRes.ok) {
+            res = orgRes;
+          }
+        }
+
         if (!res.ok) {
           if (res.status === 403) {
             throw new Error('GitHub API rate limit reached (60 req/hr). Try again later.');
@@ -291,24 +235,30 @@
         const data = await res.json();
         if (Array.isArray(data)) {
           allRepos = data;
-          populateLanguages(allRepos);
-          loadingEl.style.display = 'none';
-          errorEl.style.display = 'none';
-          renderRepositories(allRepos);
+          if (loadingEl) loadingEl.style.display = 'none';
+          if (errorEl) errorEl.style.display = 'none';
+
+          if (allRepos.length === 0) {
+            if (emptyEl) {
+              if (emptyMsg) emptyMsg.textContent = `No public repositories found for '${targetUser}'.`;
+              emptyEl.style.display = 'block';
+            }
+            if (gridEl) gridEl.style.display = 'none';
+            populateLanguages([]);
+          } else {
+            populateLanguages(allRepos);
+            renderRepositories(allRepos);
+          }
         } else {
           throw new Error('Unexpected response format from GitHub API.');
         }
       } catch (err) {
-        loadingEl.style.display = 'none';
-        if (targetUser === 'mitkarisatyam' && initialRepos.length > 0) {
-          allRepos = initialRepos;
-          populateLanguages(allRepos);
-          renderRepositories(allRepos);
-        } else {
-          errorEl.style.display = 'flex';
-          gridEl.style.display = 'none';
-          if (errorMsg) errorMsg.textContent = err.message || 'Could not connect to GitHub API.';
-        }
+        allRepos = [];
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (gridEl) gridEl.style.display = 'none';
+        if (emptyEl) emptyEl.style.display = 'none';
+        if (errorEl) errorEl.style.display = 'block';
+        if (errorMsg) errorMsg.textContent = err.message || 'Could not connect to GitHub API.';
       }
     }
 
@@ -342,12 +292,15 @@
       }
       if (currentVal && select.querySelector(`option[value="${currentVal}"]`)) {
         select.value = currentVal;
+      } else {
+        select.value = 'all';
       }
     }
 
     function renderRepositories(repos) {
       const gridEl = document.getElementById('repos-grid');
       const emptyEl = document.getElementById('repos-empty');
+      const emptyMsg = document.getElementById('repos-empty-msg');
       if (!gridEl) return;
       gridEl.innerHTML = '';
 
@@ -368,7 +321,10 @@
 
       if (filtered.length === 0) {
         gridEl.style.display = 'none';
-        if (emptyEl) emptyEl.style.display = 'flex';
+        if (emptyEl) {
+          if (emptyMsg) emptyMsg.textContent = 'No repositories found matching your filter.';
+          emptyEl.style.display = 'block';
+        }
         return;
       }
 
@@ -386,10 +342,14 @@
         else if (langName === 'TypeScript') langColorClass = 'border-blue-500/40 text-blue-400';
         else if (langName === 'Python') langColorClass = 'border-emerald-500/40 text-emerald-400';
         else if (langName === 'HTML') langColorClass = 'border-orange-500/40 text-orange-400';
+        else if (langName === 'Go') langColorClass = 'border-cyan-500/40 text-cyan-400';
+        else if (langName === 'Java') langColorClass = 'border-red-500/40 text-red-400';
+        else if (langName === 'C++') langColorClass = 'border-pink-500/40 text-pink-400';
+        else if (langName === 'Rust') langColorClass = 'border-amber-600/40 text-amber-500';
 
         const stars = repo.stargazers_count || 0;
         const forks = repo.forks_count || 0;
-        const desc = repo.description || 'Public repository maintained by student developers.';
+        const desc = repo.description || 'No description provided.';
         
         const topicsHtml = (repo.topics && Array.isArray(repo.topics) && repo.topics.length > 0)
           ? `<div class="flex flex-wrap gap-2 mb-4">${repo.topics.slice(0, 5).map(t => `<span class="badge text-[10px]">${escapeHtml(t)}</span>`).join('')}</div>`
@@ -448,8 +408,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      populateLanguages(allRepos);
-      renderRepositories(allRepos);
       fetchRepositories();
 
       const searchInput = document.getElementById('repo-search');
